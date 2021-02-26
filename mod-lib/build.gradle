@@ -1,0 +1,49 @@
+plugins {
+    id 'java-library'
+}
+
+group = "${rootProject.group}-lib"
+version = rootProject.version
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    impl
+    factory
+}
+
+java {
+    registerFeature('impl') {
+        usingSourceSet(sourceSets.named('impl').get())
+        capability("${project.group}", "${project.name}-impl", "${project.version}")
+    }
+    registerFeature('factory') {
+        usingSourceSet(sourceSets.named('factory').get())
+        capability("${project.group}", "${project.name}-factory", "${project.version}")
+    }
+    modularity.inferModulePath.set(true)
+}
+
+configurations {
+    outputJars {
+        Configuration out = delegate
+        out.extendsFrom(
+                configurations.implApiElements as Configuration,
+                configurations.implRuntimeElements as Configuration,
+                configurations.factoryApiElements as Configuration,
+                configurations.factoryRuntimeElements as Configuration)
+    }
+}
+
+dependencies {
+    implImplementation sourceSets.main.output
+    factoryImplementation sourceSets.main.output
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+artifacts {
+    outputJars(factoryJar, implJar)
+}

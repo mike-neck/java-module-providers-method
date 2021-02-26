@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+
+group = "${rootProject.group}-app"
+version = rootProject.version
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(project(':jar-lib'))
+    runtimeOnly(project(path: ':jar-lib', configuration: 'outputJars'))
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+application {
+    mainClassName = 'com.example.app.App'
+}
+
+tasks.withType(Test).named('test') {
+    it.useJUnitPlatform()
+}

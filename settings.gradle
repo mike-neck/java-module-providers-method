@@ -1,0 +1,6 @@
+rootProject.name = 'java-module-provide-method'
+include('mod-app')
+include('mod-lib')
+
+include "jar-app"
+include "jar-lib"
