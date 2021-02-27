@@ -1,2 +1,14 @@
 group = 'com.example.loader'
 version = '1'
+
+task runModuleApp(
+        group: 'application',
+        description: 'runs mod-app application',
+        dependsOn: ':mod-app:run',
+)
+
+task runJarApp(
+        group: 'application',
+        description: 'runs jar-app application(which will fail)',
+        dependsOn: ':jar-app:run',
+)
