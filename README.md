@@ -38,7 +38,9 @@ To run the jar application, run the task `runJarApp`.
 ```
 
 The jar application consists of `jar-app` project and `jar-lib` project.
-And the dependency tree is like the Jigsaw's one.
+The dependency tree is like the Jigsaw's one.
+If Jigsaw is un-applied, `ServiceLoader` won't find `provider()` method.
+That is the execution of the jar application will fail.
 
 ```text
 ├── jar-app
